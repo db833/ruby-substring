@@ -1,25 +1,17 @@
 def substrings(string, dictionary)
-
-    countSubs(allSubstrings(string), dictionary)
-
-end
-
-#Get all substrings
-def allSubstrings(string)
-    array = []
-    (0..string.length).each do |i|
-        (0..string.length).each do |j|
-            array.push(string[i,j])
-        end
+    result = {}
+    #For each member in dictionary check in string
+    dictionary.each do |dictWord|
+        countWord = 0
+        if string.downcase.include?(dictWord)
+            #For each interval of length, check equals dictionary item
+            (0..(string.length-dictWord.length)).each do |i|
+                if dictWord == string[i,dictWord.length].downcase 
+                    then countWord=countWord+1 
+                end   
+            end
+            result[dictWord] = countWord
+        end    
     end
-    return array.uniq
-end
-
-#Count substring in dictionaty
-def countSubs(arraySubs, dictionary)
-    hashSubCount = {}
-    arraySubs.each do |substring|
-        if dictionary.count(substring) > 0 then hashSubCount[substring] = dictionary.count(substring) end
-    end
-    return hashSubCount
+    result
 end
